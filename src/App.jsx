@@ -334,30 +334,23 @@ export default function App() {
           </section>
         </main>
 
-        {/* Re-use Settings Modal Logic */}
         {isSettingsOpen && (
-          <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
-            <div className="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-md p-6 shadow-2xl relative">
-              <button onClick={() => setIsSettingsOpen(false)} className="absolute top-4 right-4 text-slate-400 hover:text-slate-200">
-                <X className="w-5 h-5" />
-              </button>
-              <h2 className="text-lg font-semibold text-white flex items-center gap-2">
-                <Server className="w-5 h-5 text-indigo-400" /> API Environment Settings
-              </h2>
-              <div className="mt-4 flex flex-col gap-2">
-                <label className="text-xs font-medium text-slate-300">Backend URL</label>
-                <input
-                  type="text"
-                  value={pendingApiUrl}
-                  onChange={(e) => setPendingApiUrl(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-slate-200 focus:outline-none focus:border-indigo-500 font-mono"
-                />
+          <div className="modal-backdrop" role="presentation" onMouseDown={() => setIsSettingsOpen(false)}>
+            <section className="modal-card" role="dialog" aria-modal="true" aria-labelledby="auth-settings-title" onMouseDown={(e) => e.stopPropagation()}>
+              <button onClick={() => setIsSettingsOpen(false)} className="modal-close" aria-label="Close settings"><X className="w-5 h-5" /></button>
+              <div className="modal-heading">
+                <div className="modal-icon"><Server className="w-5 h-5" /></div>
+                <div><h2 id="auth-settings-title">API Settings</h2><p>Connect your Todo backend</p></div>
               </div>
-              <div className="mt-6 flex justify-end gap-2.5">
-                <button onClick={() => setIsSettingsOpen(false)} className="px-4 py-2 rounded-xl text-xs text-slate-400 hover:bg-slate-800">Cancel</button>
-                <button onClick={() => { setApiUrl(pendingApiUrl); setIsSettingsOpen(false); }} className="px-4 py-2 rounded-xl text-xs bg-indigo-600 hover:bg-indigo-500 text-white font-medium">Save</button>
+              <label className="api-field">
+                <span>Backend URL</span>
+                <input type="text" value={pendingApiUrl} onChange={(e) => setPendingApiUrl(e.target.value)} placeholder="https://api.example.com" />
+              </label>
+              <div className="modal-actions">
+                <button onClick={() => setIsSettingsOpen(false)} className="secondary-button">Cancel</button>
+                <button onClick={() => { setApiUrl(pendingApiUrl); setIsSettingsOpen(false); }} className="primary-button">Save connection</button>
               </div>
-            </div>
+            </section>
           </div>
         )}
       </div>
